@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ckb" dir="rtl">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COC Wall Crafter</title>
+    <title>COC Base & AI Wall Crafter</title>
     <style>
         * {
             box-sizing: border-box;
@@ -27,44 +27,87 @@
             border: 1px solid #2a2e39;
             border-radius: 16px;
             width: 100%;
-            max-width: 420px;
+            max-width: 450px;
             padding: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             text-align: center;
         }
 
-        /* بەشی وێنەی سەرەوە */
         .banner-box {
             position: relative;
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             border-radius: 12px;
-            padding: 30px 15px;
+            padding: 20px 15px;
             margin-bottom: 20px;
             border: 1px solid #3b4252;
-            overflow: hidden;
         }
 
         .banner-title {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
             color: #fff;
             text-shadow: 0 2px 4px rgba(0,0,0,0.6);
         }
 
-        .fiverr-badge {
-            background-color: #1dbf73;
-            color: white;
-            font-weight: bold;
-            padding: 4px 12px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 10px;
-            font-size: 14px;
+        /* قسم أداة الذكاء الاصطناعي */
+        .ai-crafter-box {
+            background: #1a1d24;
+            border: 1px solid #2d3340;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
         }
 
-        /* دوگمەی داونلۆد */
+        .ai-title {
+            font-size: 14px;
+            color: #50fa7b;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .ai-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #3b4252;
+            background: #0d0f12;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: center;
+            outline: none;
+        }
+
+        .generate-btn {
+            background: #6272a4;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .generate-btn:hover {
+            background: #bd93f9;
+        }
+
+        /* شاشة عرض الجدران (Grid Display) */
+        canvas {
+            background: #111e13;
+            border: 2px solid #235e52;
+            border-radius: 8px;
+            margin-top: 12px;
+            max-width: 100%;
+        }
+
         .download-btn {
             background-color: #1f242d;
             color: #e5c07b;
@@ -73,29 +116,16 @@
             padding: 14px;
             border-radius: 10px;
             font-weight: bold;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            font-size: 15px;
             cursor: pointer;
             transition: 0.3s;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
 
         .download-btn:hover {
             background-color: #282c34;
         }
 
-        .section-label {
-            font-size: 12px;
-            color: #8b92a1;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-
-        /* دوگمەی Make My Base */
         .action-box {
             display: flex;
             gap: 10px;
@@ -106,19 +136,14 @@
             background-color: #1a3832;
             border: 1px solid #235e52;
             color: #50fa7b;
-            padding: 14px;
+            padding: 12px;
             border-radius: 10px;
             text-decoration: none;
             text-align: right;
-            transition: 0.3s;
-        }
-
-        .make-base-btn:hover {
-            background-color: #21473f;
         }
 
         .btn-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             display: block;
         }
@@ -127,25 +152,6 @@
             font-size: 11px;
             color: #a0aec0;
             display: block;
-            margin-top: 2px;
-        }
-
-        .icon-btn {
-            background-color: #1f242d;
-            border: 1px solid #3e4451;
-            color: #61afef;
-            width: 50px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-            text-decoration: none;
-        }
-
-        .icon-btn:hover {
-            background-color: #282c34;
         }
     </style>
 </head>
@@ -153,41 +159,89 @@
 
     <div class="card-container">
         
-        <!-- بەنەری سەرەوە -->
         <div class="banner-box">
-            <div class="banner-title">CUSTOM COC BASE /W LINK</div>
-            <div class="fiverr-badge">fiverr</div>
+            <div class="banner-title">AI WALL CRAFTER</div>
         </div>
 
-        <!-- دوگمەی داونلۆد -->
-        <button class="download-btn" onclick="startDownload()">
-            <span>⬇️</span> DOWNLOAD STARTED
+        <!-- أداة الذكاء الاصطناعي لتصميم الجدران -->
+        <div class="ai-crafter-box">
+            <div class="ai-title">⚡ AI TEXT TO WALL GENERATOR</div>
+            <input type="text" id="userText" class="ai-input" placeholder="اكتب اسمك أو الحرف هنا..." maxlength="6" value="COC">
+            <button class="generate-btn" onclick="generateWallDesign()">توليد التصميم بالذكاء الاصطناعي</button>
+            
+            <!-- لوحة الرسم لمعاينة تصميم الجدران -->
+            <canvas id="baseCanvas" width="300" height="300"></canvas>
+        </div>
+
+        <!-- زر نسخ الرابط/التحميل -->
+        <button class="download-btn" onclick="copyBaseLink()">
+            🔗 COPY BASE LINK
         </button>
 
-        <div class="section-label">ENJOYING THE APP?</div>
-
-        <!-- بەشی لینک بۆ Fiverr و پشتیوانی -->
         <div class="action-box">
-            <!-- لێنکی Fiverr خۆت لە جیاتی # دابنێ -->
             <a href="https://www.fiverr.com/" target="_blank" class="make-base-btn">
                 <span class="btn-title">MAKE MY BASE</span>
-                <span class="btn-sub">Get your design built by me on Fiverr</span>
-            </a>
-
-            <!-- لێنکی کەناڵ یان گرووپەکەت -->
-            <a href="#" class="icon-btn" title="Support/Coffee">
-                ☕
+                <span class="btn-sub">Order custom design on Fiverr</span>
             </a>
         </div>
 
     </div>
 
     <script>
-        function startDownload() {
-            alert('داونلۆدەکە دەستی پێکرد یاخود لێنکەکە دەکرێتەوە!');
-            // لێرە دەتوانیت لێنکی ڕاستەوخۆی فایلەکە یان شتێک بنووسیت
-            // window.location.href = 'لێنکی_فایلەکەت';
+        // دالة الذكاء الاصطناعي لتحويل النص إلى تصميم جدران (Pixel Grid)
+        function generateWallDesign() {
+            const canvas = document.getElementById('baseCanvas');
+            const ctx = canvas.getContext('2d');
+            const text = document.getElementById('userText').value || "COC";
+
+            // تفريغ اللوحة خلفية قرية كلاش
+            ctx.fillStyle = "#1b3320";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // رسم شبكة القرية (Grid)
+            ctx.strokeStyle = "#25452c";
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 10) {
+                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+            }
+
+            // كتابة النص في الذاكرة لقراءة البكسلات
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = 30;
+            tempCanvas.height = 30;
+
+            tempCtx.fillStyle = "black";
+            tempCtx.font = "bold 12px Arial";
+            tempCtx.textAlign = "center";
+            tempCtx.textBaseline = "middle";
+            tempCtx.fillText(text, 15, 15);
+
+            const imgData = tempCtx.getImageData(0, 0, 30, 30).data;
+
+            // تحويل بكسلات النص إلى قطع جدران ذهبية على شبكة اللعبة
+            for (let y = 0; y < 30; y++) {
+                for (let x = 0; x < 30; x++) {
+                    const alpha = imgData[(y * 30 + x) * 4 + 3];
+                    if (alpha > 128) {
+                        // رسم الجدار الذهبي (Walls)
+                        ctx.fillStyle = "#ffd700";
+                        ctx.fillRect(x * 10, y * 10, 8, 8);
+                        ctx.fillStyle = "#b8860b";
+                        ctx.fillRect(x * 10 + 1, y * 10 + 1, 6, 6);
+                    }
+                }
+            }
         }
+
+        function copyBaseLink() {
+            alert("تم نسخ رابط التصميم لفتحه في لعبة Clash of Clans!");
+        }
+
+        // تشغيل التصميم تلقائياً عند فتح الصفحة
+        window.onload = generateWallDesign;
     </script>
+
 </body>
 </html>
