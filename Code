@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ckb" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
         body {
             background-color: #0d0f12;
             color: #ffffff;
-            font-family: sans-serif;
+            font-family: system-ui, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,10 +21,9 @@
             border: 1px solid #2a2e39;
             border-radius: 12px;
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             padding: 20px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
         .title {
             font-size: 20px;
@@ -59,18 +58,18 @@
             border: 1px solid #25452c;
             border-radius: 6px;
             margin: 10px 0;
-            max-width: 100%;
         }
         .fiverr-btn {
             background: #1a3832;
             border: 1px solid #235e52;
             color: #50fa7b;
             display: block;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
             text-decoration: none;
             font-size: 14px;
             margin-top: 10px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -79,11 +78,11 @@
     <div class="card">
         <div class="title">⚡ AI WALL CRAFTER</div>
 
-        <input type="text" id="userText" value="COC" placeholder="اكتب اسمك هنا">
-        <button onclick="drawWalls()">توليد الجدران</button>
+        <input type="text" id="userText" value="COC" placeholder="ناوێک بنووسە">
+        <button onclick="drawWalls()">دروستکردنی بەیس</button>
 
         <br>
-        <canvas id="myCanvas" width="280" height="280"></canvas>
+        <canvas id="myCanvas" width="260" height="260"></canvas>
 
         <a href="https://www.fiverr.com/" target="_blank" class="fiverr-btn">
             MAKE MY BASE ON FIVERR
@@ -96,19 +95,16 @@
             var ctx = canvas.getContext('2d');
             var text = document.getElementById('userText').value || "COC";
 
-            // تنظيف اللوحة
             ctx.fillStyle = "#1b3320";
-            ctx.fillRect(0, 0, 280, 280);
+            ctx.fillRect(0, 0, 260, 260);
 
-            // كتابة النص ورسم الجدران
             ctx.fillStyle = "#ffd700";
-            ctx.font = "bold 60px Arial";
+            ctx.font = "bold 50px Arial";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText(text, 140, 140);
+            ctx.fillText(text, 130, 130);
         }
 
-        // تشغيل تلقائي عند الفتح
         window.onload = drawWalls;
     </script>
 
